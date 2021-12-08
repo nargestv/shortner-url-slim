@@ -25,9 +25,9 @@ class UserRepository implements BaseRepositoryInterface{
         $this->connection = $connection;
     }
 
-    public function login($id, $pwd)
+    public function login($email, $pwd)
     {
-        $sql = "SELECT FROM users where id=".$id." and pwd=".$pwd;
+        $sql = "SELECT FROM users where email=".$email." and pwd=".$pwd;
         $query= $this->connection->prepare($sql);
         $query->execute();
         $result = $this->connection->query($query);
@@ -35,16 +35,15 @@ class UserRepository implements BaseRepositoryInterface{
         return  $result;
     }
     
-    public function create($user){
+    public function create($payload){
+
         $row = [
-            'username' => $user['username'],
-            'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
-            'email' => $user['email'],
+            'first_name' => $payload['first_name'],
+            'last_name' => $payload['last_name'],
+            'email' => $payload['email'],
         ];
 
         $sql = "INSERT INTO users SET 
-                username=:username, 
                 first_name=:first_name, 
                 last_name=:last_name, 
                 email=:email;";
