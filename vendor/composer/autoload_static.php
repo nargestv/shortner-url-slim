@@ -60,6 +60,7 @@ class ComposerStaticInitc162742b47c049e0c9bd01e1d46fac82
         ),
         'A' => 
         array (
+            'App\\Test\\' => 9,
             'App\\' => 4,
         ),
     );
@@ -87,7 +88,7 @@ class ComposerStaticInitc162742b47c049e0c9bd01e1d46fac82
         ),
         'Psr\\Log\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/log/src',
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
         'Psr\\Http\\Server\\' => 
         array (
@@ -134,6 +135,10 @@ class ComposerStaticInitc162742b47c049e0c9bd01e1d46fac82
         'DI\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-di/php-di/src',
+        ),
+        'App\\Test\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/tests',
         ),
         'App\\' => 
         array (

@@ -11,7 +11,7 @@ return array(
     'Slim\\' => array($vendorDir . '/slim/slim/Slim'),
     'Selective\\BasePath\\' => array($vendorDir . '/selective/basepath/src'),
     'Sapphirecat\\Slim4HttpInteropAdapter\\' => array($vendorDir . '/sapphirecat/slim4-http-interop-adapter/src'),
-    'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),
+    'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Psr\\Http\\Server\\' => array($vendorDir . '/psr/http-server-handler/src', $vendorDir . '/psr/http-server-middleware/src'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-factory/src', $vendorDir . '/psr/http-message/src'),
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
@@ -23,5 +23,6 @@ return array(
     'Fig\\Http\\Message\\' => array($vendorDir . '/fig/http-message-util/src'),
     'FastRoute\\' => array($vendorDir . '/nikic/fast-route/src'),
     'DI\\' => array($vendorDir . '/php-di/php-di/src'),
+    'App\\Test\\' => array($baseDir . '/tests'),
     'App\\' => array($baseDir . '/src'),
 );

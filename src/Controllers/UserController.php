@@ -32,4 +32,12 @@ class UserController
       return $this->repository->login($data);
     }
 
+    public function update(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    {
+      $json = $request->getBody();
+      $data = json_decode($json, true); 
+      $personId = $request->params('id');
+
+      return $this->repository->update($personId, $data);
+    }
 }
