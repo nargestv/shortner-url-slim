@@ -32,12 +32,12 @@ final class UrlCreator
         $this->validateUrlFormat($url);
         
         // fetch url
-        $userId = $this->repository->fetchUrl($url);
+        $fetchUrl = $this->repository->fetchUrl($url);
 
         // Logging here: User created successfully
         //$this->logger->info(sprintf('User created successfully: %s', $userId));
 
-        return $userId;
+        return $fetchUrl;
     }
 
     /**

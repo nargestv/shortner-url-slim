@@ -9,7 +9,7 @@ return function (App $app) {
     $app->addBodyParsingMiddleware();
 
     // Add the Slim built-in routing middleware
-    $app->addRoutingMiddleware();
+   // $app->addRoutingMiddleware();
 
     $app->add(BasePathMiddleware::class); // <--- here
 

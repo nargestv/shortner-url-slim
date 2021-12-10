@@ -19,18 +19,23 @@ $container->set('UserController', function (ContainerInterface $container) {
 });
 
 return function (App $app) {
-    $routingMiddleware = new Slim\Middleware\RoutingMiddleware(
-            $app->getRouteResolver(),
-            $app->getRouteCollector()->getRouteParser()
-    );
-    $app->add(new authorization());
-    $app->addBodyParsingMiddleware();
-    $app->addMiddleware($routingMiddleware);
-    $app->add(new BasePathMiddleware($app));
+    // $routingMiddleware = new Slim\Middleware\RoutingMiddleware(
+    //         $app->getRouteResolver(),
+    //         $app->getRouteCollector()->getRouteParser()
+    // );
+    // $app->add(new authorization());
+    // $app->addBodyParsingMiddleware();
+    // $app->addMiddleware($routingMiddleware);
+    // $app->add(new BasePathMiddleware($app));
     $app->group('/api', function (RouteCollectorProxy $group) {
         $group->post('/register', \App\Controllers\UserController::class . ':register');
         $group->post('/login', \App\Controllers\UserController::class . ':login');
 
+          // API group    
+        $group->get('/{url}', \App\Controllers\UrlController::class . ':getRoute');
+        $group->post('/create', \App\Controllers\UrlController::class . ':generateUrl');
+        $group->post('/edit/{url}', \App\Controllers\UrlController::class . ':updateUrl');
+        $group->post('/delete/{url}', \App\Controllers\UrlController::class . ':deleteUrl');
      });
     
 
@@ -44,7 +49,7 @@ return function (App $app) {
     });
 
 
-    // API group    
-    $app->get('/{url}', \App\Action\URLAction::class );
+  
+
 };
 

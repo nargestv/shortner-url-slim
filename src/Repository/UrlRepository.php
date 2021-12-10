@@ -22,14 +22,13 @@ class UrlRepository implements BaseRepositoryInterface{
      *
      * @param PDO $connection The database connection
      */
-    public function __construct(PDO $connection)
-    {
-        $this->connection = $connection;
-    }
+    // public function __construct(PDO $connection)
+    // {
+    //    // $this->connection = $connection;
+    // }
 
     public function create($attributes){
-       
-
+       return $this->fetchUrl($attributes);
     }
 
     /**
@@ -47,24 +46,31 @@ class UrlRepository implements BaseRepositoryInterface{
        
     }
 
-    public function getByID($id)
+    public function getByID($url)
     {
-   
+        return $this->urlExistsInDB($url);
     }
 
-    public function update($id, array $data)
+    public function update($url, array $data)
     {
-      
+        $fetchUrl = $this->urlExistsInDB($url);
+        if($fetchUrl){
+            $update = $this->fetchUrl($data);
+
+        }
     }
 
     public function delete($id)
     {
-       
+       $this->deleteUrlInDB($id);
     }
 
     public function fetchUrl($url): array
     {
         $shortCode = $this->urlExistsInDB($url);
+        if($shortCode){
+            $shortCode = $this->updateShortCode($url);
+        }
         if($shortCode == false){
             $shortCode = $this->createShortCode($url);
         }
@@ -91,6 +97,12 @@ class UrlRepository implements BaseRepositoryInterface{
         return $shortCode;
     }
 
+    protected function updateShortCode($url){
+        $shortCode = $this->generateRandomString(self::$codeLength);
+        $id = $this->updateUrlInDB($url, $shortCode);
+        return $shortCode;
+    }
+    
     protected function generateRandomString($length = 6){
         $sets = explode('|', self::$chars);
         $all = '';
@@ -104,9 +116,9 @@ class UrlRepository implements BaseRepositoryInterface{
             $randString .= $all[array_rand($all)];
         }
         $randString = str_shuffle($randString);
+       
         return $randString;
     }
-
     
     protected function insertUrlInDB($url, $code){
         $query = "INSERT INTO ".self::$table." (long_url, short_code, created) VALUES (:long_url, :short_code, :timestamp)";
@@ -119,5 +131,37 @@ class UrlRepository implements BaseRepositoryInterface{
         $stmnt->execute($params);
 
         return $this->pdo->lastInsertId();
+    }
+
+    protected function updateUrlInDB($url, $code){
+        $query = "UPDATE ".self::$table."  
+        SET `long_url` = :long_url,
+            `short_code` = :short_code
+        WHERE `id` = :id";
+
+        $stmnt = $this->pdo->prepare($query);
+        $params = array(
+            "long_url" => $url,
+            "short_code" => $code,
+            "timestamp" => $this->timestamp
+        );
+        $stmnt->execute($params);
+
+        return $this->pdo->lastInsertId();
+    }
+
+
+    protected function deleteUrlInDB($id){
+        $sql = 'DELETE FROM publishers
+        WHERE publisher_id = :publisher_id';
+
+// prepare the statement for execution
+$statement = $pdo->prepare($sql);
+$statement->bindParam(':publisher_id', $publisher_id, PDO::PARAM_INT);
+
+// execute the statement
+if ($statement->execute()) {
+	echo 'publisher id ' . $publisher_id . ' was deleted successfully.';
+}
     }
 }
